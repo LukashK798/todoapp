@@ -1,6 +1,8 @@
 package pl.javastart.todoapp.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 import java.time.LocalDateTime;
 
@@ -12,6 +14,8 @@ public class Task {
     private Long id;
 
     @Column(nullable = false)
+    @NotBlank(message = "Tytul nie moze byc pusty")
+    @Size(min = 1, max = 100, message = "Tytul musi miec minimum 1 do 100 znakow")
     private String title;
 
     private String description;
