@@ -1,5 +1,6 @@
 package pl.javastart.todoapp.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -29,6 +30,7 @@ public class Task {
     @Enumerated(EnumType.STRING)
     private Status status;
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime createdAt;
 
     public enum Status{
