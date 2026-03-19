@@ -3,19 +3,25 @@ package pl.javastart.todoapp.model;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "tasks")
+@Getter
+@Setter
+@NoArgsConstructor
 public class Task {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(nullable = false)
-    @NotBlank(message = "Tytul nie moze byc pusty")
-    @Size(min = 1, max = 100, message = "Tytul musi miec minimum 1 do 100 znakow")
+    @NotBlank(message = "Title cannot be empty")
+    @Size(min = 1, max = 100, message = "Title must be between 1 and 100 character long")
     private String title;
 
     private String description;
@@ -38,19 +44,4 @@ public class Task {
             this.status = Status.NEW;
         }
     }
-
-    public Long getId() {return id;}
-    public void setId(Long id) {this.id = id;}
-
-    public String getTitle() {return title;}
-    public void setTitle(String title) {this.title = title;}
-
-    public String getDescription() {return description;}
-    public void setDescription(String description) {this.description = description;}
-
-    public Status getStatus() {return status;}
-    public void setStatus(Status status) {this.status = status;}
-
-    public LocalDateTime getCreatedAt() {return createdAt;}
-    public void setCreatedAt(LocalDateTime createdAt) {this.createdAt = createdAt;}
 }

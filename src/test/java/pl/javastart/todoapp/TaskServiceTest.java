@@ -70,6 +70,39 @@ class TaskServiceTest {
     }
 
     @Test
+    void shouldUpdateTaskWhenExists() {
+        Long taskId = 1L;
+        Task existingTask = new Task();
+        existingTask.setId(taskId);
+        existingTask.setTitle("Old Title");
+
+        Task updatedTaskInfo = new Task();
+        updatedTaskInfo.setTitle("New Title");
+
+        when(taskRepository.findById(taskId)).thenReturn(Optional.of(existingTask));
+        when(taskRepository.save(any(Task.class))).thenAnswer(invocation -> invocation.getArgument(0));
+
+        Optional<Task> result = taskService.updateTask(taskId, updatedTaskInfo);
+
+        assertTrue(result.isPresent());
+        assertEquals("New Title", result.get().getTitle());
+        verify(taskRepository).save(existingTask);
+    }
+
+    @Test
+    void shouldReturnEmptyWhenUpdatingNonExistentTask() {
+        Long taskId = 99L;
+        Task updatedTaskInfo = new Task();
+
+        when(taskRepository.findById(taskId)).thenReturn(Optional.empty());
+
+        Optional<Task> result = taskService.updateTask(taskId, updatedTaskInfo);
+
+        assertFalse(result.isPresent());
+        verify(taskRepository, never()).save(any());
+    }
+
+    @Test
     void shouldDeleteTaskWhenExists() {
         when(taskRepository.existsById(1L)).thenReturn(true);
 
