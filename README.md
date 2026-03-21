@@ -19,6 +19,12 @@ The application uses Spring Data JPA with a PostgreSQL database and includes Swa
 | `DELETE` | `/api/tasks/{id}` | Delete a task. |
 
 ### Documentation
+docker run --name todoapp-db \
+-e POSTGRES_DB=todoapp \
+-e POSTGRES_USER=postgres \
+-e POSTGRES_PASSWORD=postgres \
+-p 5432:5432 \
+-d postgres:15
 - **Swagger UI**: [http://localhost:8080/swagger-ui.html](http://localhost:8080/swagger-ui.html) 
 - (available when the application is running)
 
